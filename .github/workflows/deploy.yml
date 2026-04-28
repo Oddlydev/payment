@@ -26,4 +26,5 @@ jobs:
           port: 22
           local_path: './'
           remote_path: '/home/rnd_oddly/rnd.oddly.co/'
-          sftp_only: true
+          sftp_only: true 
+          
