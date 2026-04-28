@@ -1,0 +1,30 @@
+name: Deploy to DreamHost via SFTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sftp-deploy:
+    name: Upload files to DreamHost
+    runs-on: ubuntu-latest
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4
+
+      - name: Deploy to DreamHost via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 22
+          local_path: './'
+          remote_path: '/home/rnd_oddly/rnd.oddly.co/'
+          sftp_only: true 
+          
