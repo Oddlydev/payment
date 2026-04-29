@@ -1,0 +1,143 @@
+.marketing-page-home {
+	max-width: none;
+	padding: 0;
+}
+
+.home-hero,
+.home-section,
+.home-cta {
+	margin: 0 auto;
+	max-width: var(--sandbox-max-width);
+	padding: 72px 24px;
+}
+
+.home-hero {
+	align-items: center;
+	display: grid;
+	gap: 48px;
+	grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+}
+
+.home-hero__lead {
+	color: var(--sandbox-muted);
+	font-size: 1.18rem;
+	margin: 24px 0 0;
+	max-width: 680px;
+}
+
+.home-hero__stats {
+	background: var(--sandbox-surface);
+	border: 1px solid var(--sandbox-border);
+	border-radius: 8px;
+	box-shadow: 0 18px 45px rgba(32, 33, 36, 0.08);
+	display: grid;
+	gap: 16px;
+	padding: 24px;
+}
+
+.home-hero__stats div {
+	border-bottom: 1px solid var(--sandbox-border);
+	padding-bottom: 16px;
+}
+
+.home-hero__stats div:last-child {
+	border-bottom: 0;
+	padding-bottom: 0;
+}
+
+.home-hero__stats span {
+	display: block;
+	font-size: 1.7rem;
+	font-weight: 800;
+	line-height: 1.15;
+}
+
+.home-hero__stats p {
+	color: var(--sandbox-muted);
+	margin: 8px 0 0;
+}
+
+.home-section {
+	border-top: 1px solid var(--sandbox-border);
+}
+
+.home-feature-grid {
+	display: grid;
+	gap: 18px;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	margin-top: 32px;
+}
+
+.home-image-layout {
+	display: grid;
+	gap: 18px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	margin-top: 32px;
+}
+
+.home-image-layout__item {
+	background: var(--sandbox-surface);
+	border: 1px solid var(--sandbox-border);
+	border-radius: 8px;
+	margin: 0;
+	overflow: hidden;
+}
+
+.home-image-layout__item--large {
+	grid-row: span 2;
+}
+
+.home-image-layout img {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.home-image-layout figcaption {
+	color: var(--sandbox-muted);
+	font-size: 0.95rem;
+	padding: 12px 14px;
+}
+
+.home-cta {
+	align-items: center;
+	background: #e8f3ef;
+	border-radius: 8px;
+	display: flex;
+	gap: 24px;
+	justify-content: space-between;
+	margin-bottom: 72px;
+}
+
+.home-cta h2 {
+	font-size: clamp(2rem, 4vw, 3.25rem);
+	line-height: 1.05;
+	margin: 0;
+}
+
+.home-cta p {
+	color: var(--sandbox-muted);
+	margin: 8px 0 0;
+}
+
+@media (max-width: 700px) {
+	.home-hero,
+	.home-feature-grid,
+	.home-image-layout,
+	.home-cta {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	.home-hero,
+	.home-section,
+	.home-cta {
+		padding-bottom: 48px;
+		padding-top: 48px;
+	}
+
+	.home-image-layout__item--large {
+		grid-row: auto;
+	}
+}
