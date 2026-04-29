@@ -99,7 +99,7 @@ get_header();
 			<p><?php esc_html_e('Start with this template, then replace each section using custom Gutenberg blocks tailored to your brand.', 'sandbox'); ?>
 			</p>
 		</div>
-		<a class="button button-primary" href="<?php echo esc_url(home_url('/checkout/')); ?>">
+		<a class="button button-primary" href="<?php echo esc_url(home_url('/pay-test/')); ?>">
 			<?php esc_html_e('Go to checkout', 'sandbox'); ?>
 		</a>
 	</section>
