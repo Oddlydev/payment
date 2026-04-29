@@ -44,6 +44,9 @@ function sandbox_setup()
 add_action('after_setup_theme', 'sandbox_setup');
 
 require_once get_template_directory() . '/inc/blocks/hero.php';
+require_once get_template_directory() . '/inc/blocks/features.php';
+require_once get_template_directory() . '/inc/blocks/image-layout.php';
+require_once get_template_directory() . '/inc/blocks/cta.php';
 
 function sandbox_scripts()
 {

@@ -1,0 +1,31 @@
+.sandbox-cta-block.home-cta {
+	align-items: center;
+	background: #e8f3ef;
+	border-radius: 8px;
+	display: flex;
+	gap: 24px;
+	justify-content: space-between;
+	margin: 0 auto 72px;
+	max-width: var(--sandbox-max-width);
+	padding: 72px 24px;
+}
+
+.sandbox-cta-block.home-cta h2 {
+	font-size: clamp(2rem, 4vw, 3.25rem);
+	line-height: 1.05;
+	margin: 0;
+}
+
+.sandbox-cta-block.home-cta p {
+	color: var(--sandbox-muted);
+	margin: 8px 0 0;
+}
+
+@media (max-width: 700px) {
+	.sandbox-cta-block.home-cta {
+		display: grid;
+		grid-template-columns: 1fr;
+		padding-bottom: 48px;
+		padding-top: 48px;
+	}
+}
