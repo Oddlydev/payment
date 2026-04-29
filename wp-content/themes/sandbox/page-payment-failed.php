@@ -7,7 +7,7 @@
 
 get_header();
 
-$order_id = isset($_GET['order_id']) ? absint($_GET['order_id']) : 0;
+$order_ref = isset($_GET['order_id']) ? sanitize_text_field(wp_unslash($_GET['order_id'])) : '';
 ?>
 
 <main id="primary" class="site-main status-page">
@@ -16,12 +16,12 @@ $order_id = isset($_GET['order_id']) ? absint($_GET['order_id']) : 0;
 		<h1><?php esc_html_e('Payment was not completed.', 'sandbox'); ?></h1>
 		<p><?php esc_html_e('The payment failed, was cancelled, or could not be verified. You can return to checkout and try again.', 'sandbox'); ?></p>
 
-		<?php if ($order_id) : ?>
+		<?php if ($order_ref !== '') : ?>
 			<p class="status-reference">
 				<?php
 				printf(
-					esc_html__('Order reference: #%d', 'sandbox'),
-					$order_id
+					esc_html__('Order reference: #%s', 'sandbox'),
+					esc_html($order_ref)
 				);
 				?>
 			</p>
