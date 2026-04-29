@@ -9,7 +9,7 @@ add_shortcode('payhere_button', function () {
     $merchant_secret = 'MjM5MjYxOTE3MTExMzE3MzkxMDI3OTk0NzE3MzQzNTQwMjIwNTU4';
 
     $order_id = 'ORDER_' . time();
-    $amount = '100.00';
+    $amount = '50.00';
     $currency = 'LKR';
 
     // Generate secure hash
