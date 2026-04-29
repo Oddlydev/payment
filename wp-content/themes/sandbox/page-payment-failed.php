@@ -1,6 +1,6 @@
 <?php
 /**
- * Payment failed page template.
+ * Template Name: Payment failed Page
  *
  * @package Sandbox
  */
@@ -14,9 +14,10 @@ $order_ref = isset($_GET['order_id']) ? sanitize_text_field(wp_unslash($_GET['or
 	<section class="status-card status-card--failed">
 		<p class="marketing-eyebrow"><?php esc_html_e('Payment status', 'sandbox'); ?></p>
 		<h1><?php esc_html_e('Payment was not completed.', 'sandbox'); ?></h1>
-		<p><?php esc_html_e('The payment failed, was cancelled, or could not be verified. You can return to checkout and try again.', 'sandbox'); ?></p>
+		<p><?php esc_html_e('The payment failed, was cancelled, or could not be verified. You can return to checkout and try again.', 'sandbox'); ?>
+		</p>
 
-		<?php if ($order_ref !== '') : ?>
+		<?php if ($order_ref !== ''): ?>
 			<p class="status-reference">
 				<?php
 				printf(
@@ -27,7 +28,8 @@ $order_ref = isset($_GET['order_id']) ? sanitize_text_field(wp_unslash($_GET['or
 			</p>
 		<?php endif; ?>
 
-		<a class="button button-primary" href="<?php echo esc_url(home_url('/checkout/')); ?>"><?php esc_html_e('Try again', 'sandbox'); ?></a>
+		<a class="button button-primary"
+			href="<?php echo esc_url(home_url('/checkout/')); ?>"><?php esc_html_e('Try again', 'sandbox'); ?></a>
 	</section>
 </main>
 

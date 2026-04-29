@@ -1,6 +1,6 @@
 <?php
 /**
- * Payment success page template.
+ * Template Name: Payment success page 
  *
  * @package Sandbox
  */
@@ -14,9 +14,10 @@ $order_ref = isset($_GET['order_id']) ? sanitize_text_field(wp_unslash($_GET['or
 	<section class="status-card status-card--success">
 		<p class="marketing-eyebrow"><?php esc_html_e('Payment status', 'sandbox'); ?></p>
 		<h1><?php esc_html_e('Payment received.', 'sandbox'); ?></h1>
-		<p><?php esc_html_e('Thank you. Your order has been sent for confirmation and will be marked paid once the gateway response is verified.', 'sandbox'); ?></p>
+		<p><?php esc_html_e('Thank you. Your order has been sent for confirmation and will be marked paid once the gateway response is verified.', 'sandbox'); ?>
+		</p>
 
-		<?php if ($order_ref !== '') : ?>
+		<?php if ($order_ref !== ''): ?>
 			<p class="status-reference">
 				<?php
 				printf(
@@ -27,7 +28,8 @@ $order_ref = isset($_GET['order_id']) ? sanitize_text_field(wp_unslash($_GET['or
 			</p>
 		<?php endif; ?>
 
-		<a class="button button-primary" href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Back to home', 'sandbox'); ?></a>
+		<a class="button button-primary"
+			href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Back to home', 'sandbox'); ?></a>
 	</section>
 </main>
 

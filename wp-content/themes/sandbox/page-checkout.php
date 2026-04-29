@@ -1,6 +1,6 @@
 <?php
 /**
- * Checkout page template.
+ * Template Name: Checkout page
  *
  * @package Sandbox
  */
@@ -13,7 +13,8 @@ get_header();
 		<div class="checkout-copy">
 			<p class="marketing-eyebrow"><?php esc_html_e('Secure checkout', 'sandbox'); ?></p>
 			<h1><?php esc_html_e('Complete your enrollment.', 'sandbox'); ?></h1>
-			<p><?php esc_html_e('Enter your details and continue to WEBXPAY to finish the payment securely.', 'sandbox'); ?></p>
+			<p><?php esc_html_e('Enter your details and continue to WEBXPAY to finish the payment securely.', 'sandbox'); ?>
+			</p>
 		</div>
 
 		<div class="checkout-card">
