@@ -1,6 +1,22 @@
-.marketing-page-home {
+/* Full-bleed page container — no max-width, no padding, no background box */
+.sandbox-fullbleed-page,
+.sandbox-fullbleed-page.site-main {
 	max-width: none;
 	padding: 0;
+}
+
+/* Strip the default .entry article box (white card, border, padding) */
+.sandbox-fullbleed .entry,
+.sandbox-fullbleed .entry-header,
+.sandbox-fullbleed .entry-content {
+	all: unset;
+	display: block;
+}
+
+/* Hide the page title entirely */
+.sandbox-fullbleed .entry-title,
+.sandbox-fullbleed .page-title {
+	display: none;
 }
 
 .home-hero,

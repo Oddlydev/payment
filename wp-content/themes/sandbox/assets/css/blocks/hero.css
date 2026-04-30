@@ -67,6 +67,16 @@
 	font-weight: 400;
 }
 
+/* Full-width alignment: inner content fills the viewport */
+.sandbox-hero-block.alignfull .sandbox-hero-block__inner {
+	max-width: none;
+}
+
+/* Wide alignment: expand beyond the default max-width */
+.sandbox-hero-block.alignwide .sandbox-hero-block__inner {
+	max-width: 1440px;
+}
+
 @media (max-width: 700px) {
 	.sandbox-hero-block__inner {
 		display: grid;

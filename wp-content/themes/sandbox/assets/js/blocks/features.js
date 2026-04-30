@@ -1,31 +1,20 @@
 /* global wp */
 (function (blocks, blockEditor, components, element, i18n) {
 	const { registerBlockType } = blocks;
-	const { InspectorControls, RichText } = blockEditor;
-	const { PanelBody, TextControl } = components;
+	const { InspectorControls, RichText, useBlockProps, PanelColorSettings } = blockEditor;
 	const { createElement: el, Fragment } = element;
 	const { __ } = i18n;
-
-	const phText = function () {
-		return __('Enter text here', 'sandbox');
-	};
-
-	const previewLine = function (value, tag) {
-		const Tag = tag || 'span';
-		return el(
-			Tag,
-			{
-				className: value ? '' : 'sandbox-block-placeholder',
-			},
-			value || phText()
-		);
-	};
 
 	registerBlockType('sandbox/features', {
 		title: __('Features', 'sandbox'),
 		description: __('A 3-column feature section for marketing pages.', 'sandbox'),
 		icon: 'screenoptions',
 		category: 'design',
+		supports: {
+			align: ['wide', 'full'],
+			anchor: true,
+			className: true,
+		},
 		attributes: {
 			eyebrow: { type: 'string', default: '' },
 			title: { type: 'string', default: '' },
@@ -35,9 +24,17 @@
 			featureTwoText: { type: 'string', default: '' },
 			featureThreeTitle: { type: 'string', default: '' },
 			featureThreeText: { type: 'string', default: '' },
+			backgroundColor: { type: 'string', default: '' },
+			textColor: { type: 'string', default: '' },
 		},
 		edit: function (props) {
 			const { attributes, setAttributes } = props;
+
+			const wrapperStyle = {};
+			if (attributes.backgroundColor) { wrapperStyle.backgroundColor = attributes.backgroundColor; }
+			if (attributes.textColor) { wrapperStyle.color = attributes.textColor; }
+
+			const blockProps = useBlockProps({ className: 'sandbox-features-block home-section', style: wrapperStyle });
 
 			return el(
 				Fragment,
@@ -45,62 +42,26 @@
 				el(
 					InspectorControls,
 					{},
-					el(
-						PanelBody,
-						{ title: __('Feature Cards', 'sandbox'), initialOpen: true },
-						el(TextControl, {
-							label: __('Feature 1 title', 'sandbox'),
-							placeholder: phText(),
-							value: attributes.featureOneTitle,
-							onChange: function (value) {
-								setAttributes({ featureOneTitle: value });
+					el(PanelColorSettings, {
+						title: __('Colors', 'sandbox'),
+						initialOpen: true,
+						colorSettings: [
+							{
+								value: attributes.backgroundColor,
+								onChange: function (v) { setAttributes({ backgroundColor: v || '' }); },
+								label: __('Background color', 'sandbox'),
 							},
-						}),
-						el(TextControl, {
-							label: __('Feature 1 description', 'sandbox'),
-							placeholder: phText(),
-							value: attributes.featureOneText,
-							onChange: function (value) {
-								setAttributes({ featureOneText: value });
+							{
+								value: attributes.textColor,
+								onChange: function (v) { setAttributes({ textColor: v || '' }); },
+								label: __('Text color', 'sandbox'),
 							},
-						}),
-						el(TextControl, {
-							label: __('Feature 2 title', 'sandbox'),
-							placeholder: phText(),
-							value: attributes.featureTwoTitle,
-							onChange: function (value) {
-								setAttributes({ featureTwoTitle: value });
-							},
-						}),
-						el(TextControl, {
-							label: __('Feature 2 description', 'sandbox'),
-							placeholder: phText(),
-							value: attributes.featureTwoText,
-							onChange: function (value) {
-								setAttributes({ featureTwoText: value });
-							},
-						}),
-						el(TextControl, {
-							label: __('Feature 3 title', 'sandbox'),
-							placeholder: phText(),
-							value: attributes.featureThreeTitle,
-							onChange: function (value) {
-								setAttributes({ featureThreeTitle: value });
-							},
-						}),
-						el(TextControl, {
-							label: __('Feature 3 description', 'sandbox'),
-							placeholder: phText(),
-							value: attributes.featureThreeText,
-							onChange: function (value) {
-								setAttributes({ featureThreeText: value });
-							},
-						})
-					)
+						],
+					})
 				),
 				el(
 					'section',
-					{ className: 'sandbox-features-block home-section' },
+					blockProps,
 					el(
 						'div',
 						{ className: 'section-heading' },
@@ -108,18 +69,15 @@
 							tagName: 'p',
 							className: 'marketing-eyebrow',
 							value: attributes.eyebrow,
-							placeholder: phText(),
-							onChange: function (value) {
-								setAttributes({ eyebrow: value });
-							},
+							placeholder: __('Enter eyebrow text', 'sandbox'),
+							allowedFormats: [],
+							onChange: function (v) { setAttributes({ eyebrow: v }); },
 						}),
 						el(RichText, {
 							tagName: 'h2',
 							value: attributes.title,
-							placeholder: phText(),
-							onChange: function (value) {
-								setAttributes({ title: value });
-							},
+							placeholder: __('Enter section title', 'sandbox'),
+							onChange: function (v) { setAttributes({ title: v }); },
 						})
 					),
 					el(
@@ -128,27 +86,55 @@
 						el(
 							'article',
 							{ className: 'feature-card' },
-							previewLine(attributes.featureOneTitle, 'h3'),
-							previewLine(attributes.featureOneText, 'p')
+							el(RichText, {
+								tagName: 'h3',
+								value: attributes.featureOneTitle,
+								placeholder: __('Feature title', 'sandbox'),
+								onChange: function (v) { setAttributes({ featureOneTitle: v }); },
+							}),
+							el(RichText, {
+								tagName: 'p',
+								value: attributes.featureOneText,
+								placeholder: __('Feature description', 'sandbox'),
+								onChange: function (v) { setAttributes({ featureOneText: v }); },
+							})
 						),
 						el(
 							'article',
 							{ className: 'feature-card' },
-							previewLine(attributes.featureTwoTitle, 'h3'),
-							previewLine(attributes.featureTwoText, 'p')
+							el(RichText, {
+								tagName: 'h3',
+								value: attributes.featureTwoTitle,
+								placeholder: __('Feature title', 'sandbox'),
+								onChange: function (v) { setAttributes({ featureTwoTitle: v }); },
+							}),
+							el(RichText, {
+								tagName: 'p',
+								value: attributes.featureTwoText,
+								placeholder: __('Feature description', 'sandbox'),
+								onChange: function (v) { setAttributes({ featureTwoText: v }); },
+							})
 						),
 						el(
 							'article',
 							{ className: 'feature-card' },
-							previewLine(attributes.featureThreeTitle, 'h3'),
-							previewLine(attributes.featureThreeText, 'p')
+							el(RichText, {
+								tagName: 'h3',
+								value: attributes.featureThreeTitle,
+								placeholder: __('Feature title', 'sandbox'),
+								onChange: function (v) { setAttributes({ featureThreeTitle: v }); },
+							}),
+							el(RichText, {
+								tagName: 'p',
+								value: attributes.featureThreeText,
+								placeholder: __('Feature description', 'sandbox'),
+								onChange: function (v) { setAttributes({ featureThreeText: v }); },
+							})
 						)
 					)
 				)
 			);
 		},
-		save: function () {
-			return null;
-		},
+		save: function () { return null; },
 	});
 })(window.wp.blocks, window.wp.blockEditor, window.wp.components, window.wp.element, window.wp.i18n);

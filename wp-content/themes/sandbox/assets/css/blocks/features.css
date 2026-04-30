@@ -18,6 +18,16 @@
 	margin-top: 32px;
 }
 
+/* Full-width alignment */
+.sandbox-features-block.home-section.alignfull {
+	max-width: none;
+}
+
+/* Wide alignment */
+.sandbox-features-block.home-section.alignwide {
+	max-width: 1440px;
+}
+
 @media (max-width: 700px) {
 	.sandbox-features-block.home-section {
 		padding-bottom: 48px;

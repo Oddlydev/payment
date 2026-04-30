@@ -56,6 +56,16 @@
 	padding: 12px 14px;
 }
 
+/* Full-width alignment */
+.sandbox-image-layout-block.home-section.alignfull {
+	max-width: none;
+}
+
+/* Wide alignment */
+.sandbox-image-layout-block.home-section.alignwide {
+	max-width: 1440px;
+}
+
 @media (max-width: 700px) {
 	.sandbox-image-layout-block.home-section {
 		padding-bottom: 48px;

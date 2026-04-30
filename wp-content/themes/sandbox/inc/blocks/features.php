@@ -36,8 +36,15 @@ function sandbox_register_features_block()
 			'editor_script' => 'sandbox-features-block',
 			'style' => 'sandbox-features-block-style',
 			'editor_style' => 'sandbox-features-block-style',
+			'supports' => array(
+				'align' => array('wide', 'full'),
+				'anchor' => true,
+				'className' => true,
+			),
 			'render_callback' => 'sandbox_render_features_block',
 			'attributes' => array(
+				'backgroundColor' => array('type' => 'string', 'default' => ''),
+				'textColor' => array('type' => 'string', 'default' => ''),
 				'eyebrow' => array('type' => 'string', 'default' => ''),
 				'title' => array('type' => 'string', 'default' => ''),
 				'featureOneTitle' => array('type' => 'string', 'default' => ''),
@@ -63,7 +70,15 @@ function sandbox_render_features_block($attributes)
 	$feature_three_title = isset($attributes['featureThreeTitle']) ? sanitize_text_field($attributes['featureThreeTitle']) : '';
 	$feature_three_text = isset($attributes['featureThreeText']) ? sanitize_text_field($attributes['featureThreeText']) : '';
 
-	$wrapper_attributes = get_block_wrapper_attributes(array('class' => 'sandbox-features-block home-section'));
+	$background_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '';
+	$text_color = isset($attributes['textColor']) ? esc_attr($attributes['textColor']) : '';
+	$inline_style = '';
+	if ($background_color) { $inline_style .= 'background-color:' . $background_color . ';'; }
+	if ($text_color) { $inline_style .= 'color:' . $text_color . ';'; }
+
+	$wrapper_args = array('class' => 'sandbox-features-block home-section');
+	if ($inline_style) { $wrapper_args['style'] = $inline_style; }
+	$wrapper_attributes = get_block_wrapper_attributes($wrapper_args);
 
 	ob_start();
 	?>

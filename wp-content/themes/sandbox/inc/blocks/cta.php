@@ -36,8 +36,15 @@ function sandbox_register_cta_block()
 			'editor_script' => 'sandbox-cta-block',
 			'style' => 'sandbox-cta-block-style',
 			'editor_style' => 'sandbox-cta-block-style',
+			'supports' => array(
+				'align' => array('wide', 'full'),
+				'anchor' => true,
+				'className' => true,
+			),
 			'render_callback' => 'sandbox_render_cta_block',
 			'attributes' => array(
+				'backgroundColor' => array('type' => 'string', 'default' => ''),
+				'textColor' => array('type' => 'string', 'default' => ''),
 				'eyebrow' => array('type' => 'string', 'default' => ''),
 				'title' => array('type' => 'string', 'default' => ''),
 				'text' => array('type' => 'string', 'default' => ''),
@@ -57,7 +64,15 @@ function sandbox_render_cta_block($attributes)
 	$button_text = isset($attributes['buttonText']) ? sanitize_text_field($attributes['buttonText']) : '';
 	$button_url = isset($attributes['buttonUrl']) ? esc_url($attributes['buttonUrl']) : '';
 
-	$wrapper_attributes = get_block_wrapper_attributes(array('class' => 'sandbox-cta-block home-cta'));
+	$background_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '';
+	$text_color = isset($attributes['textColor']) ? esc_attr($attributes['textColor']) : '';
+	$inline_style = '';
+	if ($background_color) { $inline_style .= 'background-color:' . $background_color . ';'; }
+	if ($text_color) { $inline_style .= 'color:' . $text_color . ';'; }
+
+	$wrapper_args = array('class' => 'sandbox-cta-block home-cta');
+	if ($inline_style) { $wrapper_args['style'] = $inline_style; }
+	$wrapper_attributes = get_block_wrapper_attributes($wrapper_args);
 
 	ob_start();
 	?>

@@ -20,6 +20,7 @@ function sandbox_setup()
 	add_theme_support('post-thumbnails');
 	add_theme_support('responsive-embeds');
 	add_theme_support('custom-logo');
+	add_theme_support('align-wide');
 	add_theme_support('editor-styles');
 	add_editor_style('style.css');
 	add_theme_support(
@@ -53,7 +54,7 @@ function sandbox_scripts()
 	wp_enqueue_style('sandbox-style', get_stylesheet_uri(), array(), SANDBOX_VERSION);
 	wp_enqueue_script('sandbox-script', get_template_directory_uri() . '/assets/js/theme.js', array(), SANDBOX_VERSION, true);
 
-	if (is_page_template('page-home.php')) {
+	if (sandbox_is_fullbleed_page()) {
 		$home_style_path = get_template_directory() . '/assets/css/pages/home.css';
 		wp_enqueue_style(
 			'sandbox-home-page',
@@ -68,6 +69,29 @@ function sandbox_scripts()
 	}
 }
 add_action('wp_enqueue_scripts', 'sandbox_scripts');
+
+/**
+ * Returns true when the current page should use the full-bleed, no-title layout.
+ */
+function sandbox_is_fullbleed_page()
+{
+	return is_page_template('page-home.php');
+}
+
+/**
+ * Add a body class for full-bleed pages so CSS can target them globally.
+ *
+ * @param array $classes Existing body classes.
+ * @return array
+ */
+function sandbox_body_classes($classes)
+{
+	if (sandbox_is_fullbleed_page()) {
+		$classes[] = 'sandbox-fullbleed';
+	}
+	return $classes;
+}
+add_filter('body_class', 'sandbox_body_classes');
 
 function sandbox_widgets_init()
 {

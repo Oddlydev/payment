@@ -39,8 +39,15 @@ function sandbox_register_hero_block()
 			'editor_script' => 'sandbox-hero-block',
 			'style' => 'sandbox-hero-block-style',
 			'editor_style' => 'sandbox-hero-block-style',
+			'supports' => array(
+				'align' => array('wide', 'full'),
+				'anchor' => true,
+				'className' => true,
+			),
 			'render_callback' => 'sandbox_render_hero_block',
 			'attributes' => array(
+				'backgroundColor' => array('type' => 'string', 'default' => ''),
+				'textColor' => array('type' => 'string', 'default' => ''),
 				'eyebrow' => array(
 					'type' => 'string',
 					'default' => '',
@@ -142,12 +149,17 @@ function sandbox_render_hero_block($attributes)
 	$top_padding = min(max($top_padding, 24), 160);
 	$bottom_padding = min(max($bottom_padding, 24), 160);
 
+	$background_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '';
+	$text_color = isset($attributes['textColor']) ? esc_attr($attributes['textColor']) : '';
+
 	$style = sprintf(
 		'--sandbox-hero-max-width:%dpx;--sandbox-hero-padding-top:%dpx;--sandbox-hero-padding-bottom:%dpx;',
 		$max_width,
 		$top_padding,
 		$bottom_padding
 	);
+	if ($background_color) { $style .= 'background-color:' . $background_color . ';'; }
+	if ($text_color) { $style .= 'color:' . $text_color . ';'; }
 
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(

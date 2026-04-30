@@ -36,8 +36,14 @@ function sandbox_register_image_layout_block()
 			'editor_script' => 'sandbox-image-layout-block',
 			'style' => 'sandbox-image-layout-block-style',
 			'editor_style' => 'sandbox-image-layout-block-style',
+			'supports' => array(
+				'align' => array('wide', 'full'),
+				'anchor' => true,
+				'className' => true,
+			),
 			'render_callback' => 'sandbox_render_image_layout_block',
 			'attributes' => array(
+				'backgroundColor' => array('type' => 'string', 'default' => ''),
 				'eyebrow' => array('type' => 'string', 'default' => ''),
 				'title' => array('type' => 'string', 'default' => ''),
 				'imageOneUrl' => array('type' => 'string', 'default' => ''),
@@ -69,7 +75,10 @@ function sandbox_render_image_layout_block($attributes)
 	$image_three_alt = isset($attributes['imageThreeAlt']) ? sanitize_text_field($attributes['imageThreeAlt']) : '';
 	$image_three_caption = isset($attributes['imageThreeCaption']) ? sanitize_text_field($attributes['imageThreeCaption']) : '';
 
-	$wrapper_attributes = get_block_wrapper_attributes(array('class' => 'sandbox-image-layout-block home-section'));
+	$background_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '';
+	$wrapper_args = array('class' => 'sandbox-image-layout-block home-section');
+	if ($background_color) { $wrapper_args['style'] = 'background-color:' . $background_color . ';'; }
+	$wrapper_attributes = get_block_wrapper_attributes($wrapper_args);
 
 	ob_start();
 	?>
