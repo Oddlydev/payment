@@ -1,3 +1,9 @@
+.sandbox-block-placeholder {
+	color: #757575;
+	font-style: italic;
+	font-weight: 400;
+}
+
 .sandbox-cta-block.home-cta {
 	align-items: center;
 	background: #e8f3ef;

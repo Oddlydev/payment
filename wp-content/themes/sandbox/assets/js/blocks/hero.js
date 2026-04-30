@@ -6,34 +6,56 @@
 	const { createElement: el, Fragment } = element;
 	const { __ } = i18n;
 
+	const phText = function () {
+		return __('Enter text here', 'sandbox');
+	};
+	const phUrl = function () {
+		return __('Enter URL here', 'sandbox');
+	};
+	const phNumber = function () {
+		return __('Enter number here', 'sandbox');
+	};
+	const phLabel = function () {
+		return __('Enter label here', 'sandbox');
+	};
+
 	registerBlockType('sandbox/hero', {
 		title: __('Hero', 'sandbox'),
 		description: __('A customizable marketing hero section.', 'sandbox'),
 		icon: 'cover-image',
 		category: 'design',
 		attributes: {
-			eyebrow: { type: 'string', default: __('Professional training made simple', 'sandbox') },
-			title: { type: 'string', default: __('Build skills faster with focused online training.', 'sandbox') },
-			intro: {
-				type: 'string',
-				default: __('A clean learning experience for teams and individuals who want practical lessons, clear progress, and direct access to paid course enrollment.', 'sandbox'),
-			},
-			buttonText: { type: 'string', default: __('Enroll now', 'sandbox') },
-			buttonUrl: { type: 'string', default: '/checkout/' },
-			secondaryButtonText: { type: 'string', default: __('View features', 'sandbox') },
-			secondaryButtonUrl: { type: 'string', default: '#' },
-			statOneNumber: { type: 'string', default: __('8 weeks', 'sandbox') },
-			statOneLabel: { type: 'string', default: __('Structured learning path', 'sandbox') },
-			statTwoNumber: { type: 'string', default: __('24/7', 'sandbox') },
-			statTwoLabel: { type: 'string', default: __('Access to course materials', 'sandbox') },
-			statThreeNumber: { type: 'string', default: __('Certificate', 'sandbox') },
-			statThreeLabel: { type: 'string', default: __('Issued after completion', 'sandbox') },
+			eyebrow: { type: 'string', default: '' },
+			title: { type: 'string', default: '' },
+			intro: { type: 'string', default: '' },
+			buttonText: { type: 'string', default: '' },
+			buttonUrl: { type: 'string', default: '' },
+			secondaryButtonText: { type: 'string', default: '' },
+			secondaryButtonUrl: { type: 'string', default: '' },
+			statOneNumber: { type: 'string', default: '' },
+			statOneLabel: { type: 'string', default: '' },
+			statTwoNumber: { type: 'string', default: '' },
+			statTwoLabel: { type: 'string', default: '' },
+			statThreeNumber: { type: 'string', default: '' },
+			statThreeLabel: { type: 'string', default: '' },
 			maxWidth: { type: 'number', default: 1120 },
 			topPadding: { type: 'number', default: 72 },
 			bottomPadding: { type: 'number', default: 72 },
 		},
 		edit: function (props) {
 			const { attributes, setAttributes } = props;
+
+			const previewText = function (value) {
+				return value || phText();
+			};
+			const previewStat = function (num, label, phNum, phLab) {
+				return el(
+					'div',
+					{},
+					el('span', { className: num ? '' : 'sandbox-block-placeholder' }, num || phNum()),
+					el('p', { className: label ? '' : 'sandbox-block-placeholder' }, label || phLab())
+				);
+			};
 
 			return el(
 				Fragment,
@@ -77,6 +99,7 @@
 						{ title: __('Buttons', 'sandbox'), initialOpen: false },
 						el(TextControl, {
 							label: __('Primary button text', 'sandbox'),
+							placeholder: phText(),
 							value: attributes.buttonText,
 							onChange: function (value) {
 								setAttributes({ buttonText: value });
@@ -84,6 +107,7 @@
 						}),
 						el(URLInput, {
 							label: __('Primary button URL', 'sandbox'),
+							placeholder: phUrl(),
 							value: attributes.buttonUrl,
 							onChange: function (value) {
 								setAttributes({ buttonUrl: value });
@@ -91,6 +115,7 @@
 						}),
 						el(TextControl, {
 							label: __('Secondary button text', 'sandbox'),
+							placeholder: phText(),
 							value: attributes.secondaryButtonText,
 							onChange: function (value) {
 								setAttributes({ secondaryButtonText: value });
@@ -98,6 +123,7 @@
 						}),
 						el(URLInput, {
 							label: __('Secondary button URL', 'sandbox'),
+							placeholder: phUrl(),
 							value: attributes.secondaryButtonUrl,
 							onChange: function (value) {
 								setAttributes({ secondaryButtonUrl: value });
@@ -109,6 +135,7 @@
 						{ title: __('Stats', 'sandbox'), initialOpen: false },
 						el(TextControl, {
 							label: __('Stat 1 number', 'sandbox'),
+							placeholder: phNumber(),
 							value: attributes.statOneNumber,
 							onChange: function (value) {
 								setAttributes({ statOneNumber: value });
@@ -116,6 +143,7 @@
 						}),
 						el(TextControl, {
 							label: __('Stat 1 label', 'sandbox'),
+							placeholder: phLabel(),
 							value: attributes.statOneLabel,
 							onChange: function (value) {
 								setAttributes({ statOneLabel: value });
@@ -123,6 +151,7 @@
 						}),
 						el(TextControl, {
 							label: __('Stat 2 number', 'sandbox'),
+							placeholder: phNumber(),
 							value: attributes.statTwoNumber,
 							onChange: function (value) {
 								setAttributes({ statTwoNumber: value });
@@ -130,6 +159,7 @@
 						}),
 						el(TextControl, {
 							label: __('Stat 2 label', 'sandbox'),
+							placeholder: phLabel(),
 							value: attributes.statTwoLabel,
 							onChange: function (value) {
 								setAttributes({ statTwoLabel: value });
@@ -137,6 +167,7 @@
 						}),
 						el(TextControl, {
 							label: __('Stat 3 number', 'sandbox'),
+							placeholder: phNumber(),
 							value: attributes.statThreeNumber,
 							onChange: function (value) {
 								setAttributes({ statThreeNumber: value });
@@ -144,6 +175,7 @@
 						}),
 						el(TextControl, {
 							label: __('Stat 3 label', 'sandbox'),
+							placeholder: phLabel(),
 							value: attributes.statThreeLabel,
 							onChange: function (value) {
 								setAttributes({ statThreeLabel: value });
@@ -171,7 +203,7 @@
 								tagName: 'p',
 								className: 'marketing-eyebrow',
 								value: attributes.eyebrow,
-								placeholder: __('Eyebrow text', 'sandbox'),
+								placeholder: phText(),
 								onChange: function (value) {
 									setAttributes({ eyebrow: value });
 								},
@@ -180,7 +212,7 @@
 								tagName: 'h2',
 								className: 'sandbox-hero-block__title',
 								value: attributes.title,
-								placeholder: __('Hero title', 'sandbox'),
+								placeholder: phText(),
 								onChange: function (value) {
 									setAttributes({ title: value });
 								},
@@ -189,7 +221,7 @@
 								tagName: 'p',
 								className: 'sandbox-hero-block__intro',
 								value: attributes.intro,
-								placeholder: __('Intro text', 'sandbox'),
+								placeholder: phText(),
 								onChange: function (value) {
 									setAttributes({ intro: value });
 								},
@@ -197,16 +229,28 @@
 							el(
 								'div',
 								{ className: 'marketing-actions' },
-								el('span', { className: 'button button-primary' }, attributes.buttonText),
-								el('span', { className: 'button button-secondary' }, attributes.secondaryButtonText)
+								el(
+									'span',
+									{
+										className: 'button button-primary' + (attributes.buttonText ? '' : ' sandbox-block-placeholder'),
+									},
+									previewText(attributes.buttonText)
+								),
+								el(
+									'span',
+									{
+										className: 'button button-secondary' + (attributes.secondaryButtonText ? '' : ' sandbox-block-placeholder'),
+									},
+									previewText(attributes.secondaryButtonText)
+								)
 							)
 						),
 						el(
 							'div',
 							{ className: 'sandbox-hero-block__panel' },
-							el('div', {}, el('span', {}, attributes.statOneNumber), el('p', {}, attributes.statOneLabel)),
-							el('div', {}, el('span', {}, attributes.statTwoNumber), el('p', {}, attributes.statTwoLabel)),
-							el('div', {}, el('span', {}, attributes.statThreeNumber), el('p', {}, attributes.statThreeLabel))
+							previewStat(attributes.statOneNumber, attributes.statOneLabel, phNumber, phLabel),
+							previewStat(attributes.statTwoNumber, attributes.statTwoLabel, phNumber, phLabel),
+							previewStat(attributes.statThreeNumber, attributes.statThreeLabel, phNumber, phLabel)
 						)
 					)
 				)

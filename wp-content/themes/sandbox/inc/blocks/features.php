@@ -38,14 +38,14 @@ function sandbox_register_features_block()
 			'editor_style' => 'sandbox-features-block-style',
 			'render_callback' => 'sandbox_render_features_block',
 			'attributes' => array(
-				'eyebrow' => array('type' => 'string', 'default' => __('Platform features', 'sandbox')),
-				'title' => array('type' => 'string', 'default' => __('Everything needed to run a strong marketing website.', 'sandbox')),
-				'featureOneTitle' => array('type' => 'string', 'default' => __('Conversion-focused hero blocks', 'sandbox')),
-				'featureOneText' => array('type' => 'string', 'default' => __('Use editable hero sections with call-to-action controls built directly in Gutenberg.', 'sandbox')),
-				'featureTwoTitle' => array('type' => 'string', 'default' => __('Flexible page building', 'sandbox')),
-				'featureTwoText' => array('type' => 'string', 'default' => __('Combine reusable sections and rich content blocks to design custom campaign pages quickly.', 'sandbox')),
-				'featureThreeTitle' => array('type' => 'string', 'default' => __('Checkout-ready flow', 'sandbox')),
-				'featureThreeText' => array('type' => 'string', 'default' => __('Guide visitors from product discovery to payment with clear actions and minimal friction.', 'sandbox')),
+				'eyebrow' => array('type' => 'string', 'default' => ''),
+				'title' => array('type' => 'string', 'default' => ''),
+				'featureOneTitle' => array('type' => 'string', 'default' => ''),
+				'featureOneText' => array('type' => 'string', 'default' => ''),
+				'featureTwoTitle' => array('type' => 'string', 'default' => ''),
+				'featureTwoText' => array('type' => 'string', 'default' => ''),
+				'featureThreeTitle' => array('type' => 'string', 'default' => ''),
+				'featureThreeText' => array('type' => 'string', 'default' => ''),
 			),
 		)
 	);

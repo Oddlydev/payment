@@ -43,55 +43,55 @@ function sandbox_register_hero_block()
 			'attributes' => array(
 				'eyebrow' => array(
 					'type' => 'string',
-					'default' => __('Professional training made simple', 'sandbox'),
+					'default' => '',
 				),
 				'title' => array(
 					'type' => 'string',
-					'default' => __('Build skills faster with focused online training.', 'sandbox'),
+					'default' => '',
 				),
 				'intro' => array(
 					'type' => 'string',
-					'default' => __('A clean learning experience for teams and individuals who want practical lessons, clear progress, and direct access to paid course enrollment.', 'sandbox'),
+					'default' => '',
 				),
 				'buttonText' => array(
 					'type' => 'string',
-					'default' => __('Enroll now', 'sandbox'),
+					'default' => '',
 				),
 				'buttonUrl' => array(
 					'type' => 'string',
-					'default' => home_url('/checkout/'),
+					'default' => '',
 				),
 				'secondaryButtonText' => array(
 					'type' => 'string',
-					'default' => __('View features', 'sandbox'),
+					'default' => '',
 				),
 				'secondaryButtonUrl' => array(
 					'type' => 'string',
-					'default' => '#',
+					'default' => '',
 				),
 				'statOneNumber' => array(
 					'type' => 'string',
-					'default' => __('8 weeks', 'sandbox'),
+					'default' => '',
 				),
 				'statOneLabel' => array(
 					'type' => 'string',
-					'default' => __('Structured learning path', 'sandbox'),
+					'default' => '',
 				),
 				'statTwoNumber' => array(
 					'type' => 'string',
-					'default' => __('24/7', 'sandbox'),
+					'default' => '',
 				),
 				'statTwoLabel' => array(
 					'type' => 'string',
-					'default' => __('Access to course materials', 'sandbox'),
+					'default' => '',
 				),
 				'statThreeNumber' => array(
 					'type' => 'string',
-					'default' => __('Certificate', 'sandbox'),
+					'default' => '',
 				),
 				'statThreeLabel' => array(
 					'type' => 'string',
-					'default' => __('Issued after completion', 'sandbox'),
+					'default' => '',
 				),
 				'maxWidth' => array(
 					'type' => 'number',
@@ -188,6 +188,10 @@ function sandbox_render_hero_block($attributes)
 				</div>
 			</div>
 
+			<?php
+			$has_stats = $stat_one_number || $stat_one_label || $stat_two_number || $stat_two_label || $stat_three_number || $stat_three_label;
+			if ($has_stats) :
+				?>
 			<div class="sandbox-hero-block__panel" aria-label="<?php esc_attr_e('Hero statistics', 'sandbox'); ?>">
 				<div>
 					<span><?php echo esc_html($stat_one_number); ?></span>
@@ -202,6 +206,9 @@ function sandbox_render_hero_block($attributes)
 					<p><?php echo esc_html($stat_three_label); ?></p>
 				</div>
 			</div>
+				<?php
+			endif;
+			?>
 		</div>
 	</section>
 	<?php

@@ -38,11 +38,11 @@ function sandbox_register_cta_block()
 			'editor_style' => 'sandbox-cta-block-style',
 			'render_callback' => 'sandbox_render_cta_block',
 			'attributes' => array(
-				'eyebrow' => array('type' => 'string', 'default' => __('Ready to launch?', 'sandbox')),
-				'title' => array('type' => 'string', 'default' => __('Build your marketing website with Sandbox today.', 'sandbox')),
-				'text' => array('type' => 'string', 'default' => __('Start with this template, then replace each section using custom Gutenberg blocks tailored to your brand.', 'sandbox')),
-				'buttonText' => array('type' => 'string', 'default' => __('Go to checkout', 'sandbox')),
-				'buttonUrl' => array('type' => 'string', 'default' => home_url('/checkout/')),
+				'eyebrow' => array('type' => 'string', 'default' => ''),
+				'title' => array('type' => 'string', 'default' => ''),
+				'text' => array('type' => 'string', 'default' => ''),
+				'buttonText' => array('type' => 'string', 'default' => ''),
+				'buttonUrl' => array('type' => 'string', 'default' => ''),
 			),
 		)
 	);

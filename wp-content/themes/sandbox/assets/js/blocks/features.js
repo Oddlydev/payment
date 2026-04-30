@@ -6,20 +6,35 @@
 	const { createElement: el, Fragment } = element;
 	const { __ } = i18n;
 
+	const phText = function () {
+		return __('Enter text here', 'sandbox');
+	};
+
+	const previewLine = function (value, tag) {
+		const Tag = tag || 'span';
+		return el(
+			Tag,
+			{
+				className: value ? '' : 'sandbox-block-placeholder',
+			},
+			value || phText()
+		);
+	};
+
 	registerBlockType('sandbox/features', {
 		title: __('Features', 'sandbox'),
 		description: __('A 3-column feature section for marketing pages.', 'sandbox'),
 		icon: 'screenoptions',
 		category: 'design',
 		attributes: {
-			eyebrow: { type: 'string', default: __('Platform features', 'sandbox') },
-			title: { type: 'string', default: __('Everything needed to run a strong marketing website.', 'sandbox') },
-			featureOneTitle: { type: 'string', default: __('Conversion-focused hero blocks', 'sandbox') },
-			featureOneText: { type: 'string', default: __('Use editable hero sections with call-to-action controls built directly in Gutenberg.', 'sandbox') },
-			featureTwoTitle: { type: 'string', default: __('Flexible page building', 'sandbox') },
-			featureTwoText: { type: 'string', default: __('Combine reusable sections and rich content blocks to design custom campaign pages quickly.', 'sandbox') },
-			featureThreeTitle: { type: 'string', default: __('Checkout-ready flow', 'sandbox') },
-			featureThreeText: { type: 'string', default: __('Guide visitors from product discovery to payment with clear actions and minimal friction.', 'sandbox') },
+			eyebrow: { type: 'string', default: '' },
+			title: { type: 'string', default: '' },
+			featureOneTitle: { type: 'string', default: '' },
+			featureOneText: { type: 'string', default: '' },
+			featureTwoTitle: { type: 'string', default: '' },
+			featureTwoText: { type: 'string', default: '' },
+			featureThreeTitle: { type: 'string', default: '' },
+			featureThreeText: { type: 'string', default: '' },
 		},
 		edit: function (props) {
 			const { attributes, setAttributes } = props;
@@ -35,39 +50,51 @@
 						{ title: __('Feature Cards', 'sandbox'), initialOpen: true },
 						el(TextControl, {
 							label: __('Feature 1 title', 'sandbox'),
-							placeholder: __('Enter first feature title', 'sandbox'),
+							placeholder: phText(),
 							value: attributes.featureOneTitle,
-							onChange: function (value) { setAttributes({ featureOneTitle: value }); },
+							onChange: function (value) {
+								setAttributes({ featureOneTitle: value });
+							},
 						}),
 						el(TextControl, {
 							label: __('Feature 1 description', 'sandbox'),
-							placeholder: __('Enter first feature description', 'sandbox'),
+							placeholder: phText(),
 							value: attributes.featureOneText,
-							onChange: function (value) { setAttributes({ featureOneText: value }); },
+							onChange: function (value) {
+								setAttributes({ featureOneText: value });
+							},
 						}),
 						el(TextControl, {
 							label: __('Feature 2 title', 'sandbox'),
-							placeholder: __('Enter second feature title', 'sandbox'),
+							placeholder: phText(),
 							value: attributes.featureTwoTitle,
-							onChange: function (value) { setAttributes({ featureTwoTitle: value }); },
+							onChange: function (value) {
+								setAttributes({ featureTwoTitle: value });
+							},
 						}),
 						el(TextControl, {
 							label: __('Feature 2 description', 'sandbox'),
-							placeholder: __('Enter second feature description', 'sandbox'),
+							placeholder: phText(),
 							value: attributes.featureTwoText,
-							onChange: function (value) { setAttributes({ featureTwoText: value }); },
+							onChange: function (value) {
+								setAttributes({ featureTwoText: value });
+							},
 						}),
 						el(TextControl, {
 							label: __('Feature 3 title', 'sandbox'),
-							placeholder: __('Enter third feature title', 'sandbox'),
+							placeholder: phText(),
 							value: attributes.featureThreeTitle,
-							onChange: function (value) { setAttributes({ featureThreeTitle: value }); },
+							onChange: function (value) {
+								setAttributes({ featureThreeTitle: value });
+							},
 						}),
 						el(TextControl, {
 							label: __('Feature 3 description', 'sandbox'),
-							placeholder: __('Enter third feature description', 'sandbox'),
+							placeholder: phText(),
 							value: attributes.featureThreeText,
-							onChange: function (value) { setAttributes({ featureThreeText: value }); },
+							onChange: function (value) {
+								setAttributes({ featureThreeText: value });
+							},
 						})
 					)
 				),
@@ -81,26 +108,47 @@
 							tagName: 'p',
 							className: 'marketing-eyebrow',
 							value: attributes.eyebrow,
-							placeholder: __('Features eyebrow', 'sandbox'),
-							onChange: function (value) { setAttributes({ eyebrow: value }); },
+							placeholder: phText(),
+							onChange: function (value) {
+								setAttributes({ eyebrow: value });
+							},
 						}),
 						el(RichText, {
 							tagName: 'h2',
 							value: attributes.title,
-							placeholder: __('Features section title', 'sandbox'),
-							onChange: function (value) { setAttributes({ title: value }); },
+							placeholder: phText(),
+							onChange: function (value) {
+								setAttributes({ title: value });
+							},
 						})
 					),
 					el(
 						'div',
 						{ className: 'home-feature-grid' },
-						el('article', { className: 'feature-card' }, el('h3', {}, attributes.featureOneTitle), el('p', {}, attributes.featureOneText)),
-						el('article', { className: 'feature-card' }, el('h3', {}, attributes.featureTwoTitle), el('p', {}, attributes.featureTwoText)),
-						el('article', { className: 'feature-card' }, el('h3', {}, attributes.featureThreeTitle), el('p', {}, attributes.featureThreeText))
+						el(
+							'article',
+							{ className: 'feature-card' },
+							previewLine(attributes.featureOneTitle, 'h3'),
+							previewLine(attributes.featureOneText, 'p')
+						),
+						el(
+							'article',
+							{ className: 'feature-card' },
+							previewLine(attributes.featureTwoTitle, 'h3'),
+							previewLine(attributes.featureTwoText, 'p')
+						),
+						el(
+							'article',
+							{ className: 'feature-card' },
+							previewLine(attributes.featureThreeTitle, 'h3'),
+							previewLine(attributes.featureThreeText, 'p')
+						)
 					)
 				)
 			);
 		},
-		save: function () { return null; },
+		save: function () {
+			return null;
+		},
 	});
 })(window.wp.blocks, window.wp.blockEditor, window.wp.components, window.wp.element, window.wp.i18n);
