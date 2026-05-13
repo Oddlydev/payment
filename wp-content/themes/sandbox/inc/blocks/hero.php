@@ -2,6 +2,12 @@
 /**
  * Hero Gutenberg block registration and rendering.
  *
+ * The Hero is a CONTAINER block: it owns the layout (max-width, padding,
+ * background/text color, full/wide alignment) and renders whatever inner
+ * blocks the user composes inside it. Every inner block (heading, paragraph,
+ * buttons, group, columns, etc.) keeps its own native toolbar so the user can
+ * change alignment, text color, background color, typography, etc. per element.
+ *
  * @package Sandbox
  */
 
@@ -43,76 +49,30 @@ function sandbox_register_hero_block()
 				'align' => array('wide', 'full'),
 				'anchor' => true,
 				'className' => true,
+				'color' => array(
+					'background' => true,
+					'text' => true,
+					'gradients' => true,
+					'link' => true,
+				),
+				'spacing' => array(
+					'padding' => true,
+					'margin' => array('top', 'bottom'),
+					'blockGap' => true,
+				),
+				'typography' => array(
+					'fontSize' => true,
+					'lineHeight' => true,
+				),
+				'__experimentalLayout' => true,
 			),
-			'render_callback' => 'sandbox_render_hero_block',
 			'attributes' => array(
-				'backgroundColor' => array('type' => 'string', 'default' => ''),
-				'textColor' => array('type' => 'string', 'default' => ''),
-				'eyebrow' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'title' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'intro' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'buttonText' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'buttonUrl' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'secondaryButtonText' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'secondaryButtonUrl' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'statOneNumber' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'statOneLabel' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'statTwoNumber' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'statTwoLabel' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'statThreeNumber' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'statThreeLabel' => array(
-					'type' => 'string',
-					'default' => '',
-				),
 				'maxWidth' => array(
 					'type' => 'number',
 					'default' => 1120,
 				),
-				'topPadding' => array(
-					'type' => 'number',
-					'default' => 72,
-				),
-				'bottomPadding' => array(
-					'type' => 'number',
-					'default' => 72,
-				),
 			),
+			'render_callback' => 'sandbox_render_hero_block',
 		)
 	);
 }
@@ -121,45 +81,20 @@ add_action('init', 'sandbox_register_hero_block');
 /**
  * Render callback for sandbox/hero block.
  *
- * @param array $attributes Block attributes.
+ * Outputs a wrapper with layout styles and prints the inner-block content
+ * exactly as authored. WordPress already injects color/spacing classes and
+ * inline styles via get_block_wrapper_attributes() based on `supports`.
+ *
+ * @param array  $attributes Block attributes.
+ * @param string $content    Inner blocks HTML.
  * @return string
  */
-function sandbox_render_hero_block($attributes)
+function sandbox_render_hero_block($attributes, $content)
 {
-	$eyebrow = isset($attributes['eyebrow']) ? wp_kses_post($attributes['eyebrow']) : '';
-	$title = isset($attributes['title']) ? wp_kses_post($attributes['title']) : '';
-	$intro = isset($attributes['intro']) ? wp_kses_post($attributes['intro']) : '';
-	$button_text = isset($attributes['buttonText']) ? sanitize_text_field($attributes['buttonText']) : '';
-	$button_url = isset($attributes['buttonUrl']) ? esc_url($attributes['buttonUrl']) : '';
-	$secondary_button_text = isset($attributes['secondaryButtonText']) ? sanitize_text_field($attributes['secondaryButtonText']) : '';
-	$secondary_button_url = isset($attributes['secondaryButtonUrl']) ? esc_url($attributes['secondaryButtonUrl']) : '';
-
-	$stat_one_number = isset($attributes['statOneNumber']) ? sanitize_text_field($attributes['statOneNumber']) : '';
-	$stat_one_label = isset($attributes['statOneLabel']) ? sanitize_text_field($attributes['statOneLabel']) : '';
-	$stat_two_number = isset($attributes['statTwoNumber']) ? sanitize_text_field($attributes['statTwoNumber']) : '';
-	$stat_two_label = isset($attributes['statTwoLabel']) ? sanitize_text_field($attributes['statTwoLabel']) : '';
-	$stat_three_number = isset($attributes['statThreeNumber']) ? sanitize_text_field($attributes['statThreeNumber']) : '';
-	$stat_three_label = isset($attributes['statThreeLabel']) ? sanitize_text_field($attributes['statThreeLabel']) : '';
-
 	$max_width = isset($attributes['maxWidth']) ? (int) $attributes['maxWidth'] : 1120;
-	$top_padding = isset($attributes['topPadding']) ? (int) $attributes['topPadding'] : 72;
-	$bottom_padding = isset($attributes['bottomPadding']) ? (int) $attributes['bottomPadding'] : 72;
+	$max_width = min(max($max_width, 720), 1600);
 
-	$max_width = min(max($max_width, 720), 1440);
-	$top_padding = min(max($top_padding, 24), 160);
-	$bottom_padding = min(max($bottom_padding, 24), 160);
-
-	$background_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '';
-	$text_color = isset($attributes['textColor']) ? esc_attr($attributes['textColor']) : '';
-
-	$style = sprintf(
-		'--sandbox-hero-max-width:%dpx;--sandbox-hero-padding-top:%dpx;--sandbox-hero-padding-bottom:%dpx;',
-		$max_width,
-		$top_padding,
-		$bottom_padding
-	);
-	if ($background_color) { $style .= 'background-color:' . $background_color . ';'; }
-	if ($text_color) { $style .= 'color:' . $text_color . ';'; }
+	$style = sprintf('--sandbox-hero-max-width:%dpx;', $max_width);
 
 	$wrapper_attributes = get_block_wrapper_attributes(
 		array(
@@ -168,62 +103,9 @@ function sandbox_render_hero_block($attributes)
 		)
 	);
 
-	ob_start();
-	?>
-	<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-		<div class="sandbox-hero-block__inner">
-			<div class="sandbox-hero-block__content">
-				<?php if ($eyebrow) : ?>
-					<p class="marketing-eyebrow"><?php echo $eyebrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-				<?php endif; ?>
-
-				<?php if ($title) : ?>
-					<h2 class="sandbox-hero-block__title"><?php echo $title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
-				<?php endif; ?>
-
-				<?php if ($intro) : ?>
-					<p class="sandbox-hero-block__intro"><?php echo $intro; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-				<?php endif; ?>
-
-				<div class="marketing-actions">
-					<?php if ($button_text && $button_url) : ?>
-						<a class="button button-primary" href="<?php echo esc_url($button_url); ?>">
-							<?php echo esc_html($button_text); ?>
-						</a>
-					<?php endif; ?>
-
-					<?php if ($secondary_button_text && $secondary_button_url) : ?>
-						<a class="button button-secondary" href="<?php echo esc_url($secondary_button_url); ?>">
-							<?php echo esc_html($secondary_button_text); ?>
-						</a>
-					<?php endif; ?>
-				</div>
-			</div>
-
-			<?php
-			$has_stats = $stat_one_number || $stat_one_label || $stat_two_number || $stat_two_label || $stat_three_number || $stat_three_label;
-			if ($has_stats) :
-				?>
-			<div class="sandbox-hero-block__panel" aria-label="<?php esc_attr_e('Hero statistics', 'sandbox'); ?>">
-				<div>
-					<span><?php echo esc_html($stat_one_number); ?></span>
-					<p><?php echo esc_html($stat_one_label); ?></p>
-				</div>
-				<div>
-					<span><?php echo esc_html($stat_two_number); ?></span>
-					<p><?php echo esc_html($stat_two_label); ?></p>
-				</div>
-				<div>
-					<span><?php echo esc_html($stat_three_number); ?></span>
-					<p><?php echo esc_html($stat_three_label); ?></p>
-				</div>
-			</div>
-				<?php
-			endif;
-			?>
-		</div>
-	</section>
-	<?php
-
-	return ob_get_clean();
+	return sprintf(
+		'<section %1$s><div class="sandbox-hero-block__inner">%2$s</div></section>',
+		$wrapper_attributes,
+		$content // Already-rendered inner blocks; safe.
+	);
 }
