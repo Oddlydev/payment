@@ -1,0 +1,61 @@
+.sandbox-faq-block.home-section {
+	border-top: 1px solid var(--sandbox-border);
+	margin: 0 auto;
+	max-width: var(--sandbox-max-width);
+	padding: 72px 24px;
+}
+
+.sandbox-faq-list {
+	display: grid;
+	gap: 12px;
+	margin-top: 32px;
+}
+
+.sandbox-faq-list--single {
+	max-width: 860px;
+}
+
+.sandbox-faq-list--two-column {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sandbox-faq-item {
+	background: var(--sandbox-surface);
+	border: 1px solid var(--sandbox-border);
+	border-radius: 8px;
+	padding: 20px 22px;
+}
+
+.sandbox-faq-item summary,
+.sandbox-faq-item h3 {
+	cursor: pointer;
+	font-size: 1.05rem;
+	line-height: 1.3;
+	margin: 0;
+}
+
+.sandbox-faq-item div,
+.sandbox-faq-item p {
+	color: var(--sandbox-muted);
+	line-height: 1.6;
+	margin: 12px 0 0;
+}
+
+.sandbox-faq-block.home-section.alignfull {
+	max-width: none;
+}
+
+.sandbox-faq-block.home-section.alignwide {
+	max-width: 1440px;
+}
+
+@media (max-width: 700px) {
+	.sandbox-faq-block.home-section {
+		padding-bottom: 48px;
+		padding-top: 48px;
+	}
+
+	.sandbox-faq-list--two-column {
+		grid-template-columns: 1fr;
+	}
+}
